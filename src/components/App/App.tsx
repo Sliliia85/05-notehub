@@ -9,7 +9,7 @@ import type { NoteTag } from '../../types/note';
 
 import SearchBox from '../SearchBox/SearchBox';
 import Pagination from '../Pagination/Pagination';
-import NoteList from './NoteList/NoteList';
+import NoteList from '../NoteList/NoteList';
 import Modal from '../Modal/Modal';
 import NoteForm from '../NoteForm/NoteForm';
 
