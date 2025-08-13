@@ -56,7 +56,7 @@ export default function App() {
     },
   });
 
-  const notes = data?.results || [];
+  const notes = data?.notes || [];
   const totalPages = data?.totalPages || 0;
 
   const handlePageChange = ({ selected }: { selected: number }) => {
