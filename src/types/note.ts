@@ -1,5 +1,5 @@
 
-export type NoteTag = 'Study' | 'Work' | 'Personal';
+export type NoteTag = 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping';
 
 export interface Note {
   id: string;
@@ -8,12 +8,4 @@ export interface Note {
   tag: NoteTag;
   createdAt: string;
   updatedAt: string;
-}
-
-export interface FetchNotesResponse {
-  notes: Note[];
-  page: number;
-  perPage: number;
-  totalNotes: number;
-  totalPages: number;
 }

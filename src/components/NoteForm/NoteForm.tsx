@@ -1,31 +1,31 @@
-
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-hot-toast';
 import { createNote } from '../../services/noteService';
-import type { NoteTag } from '../../types/note';
+import type{ NoteTag } from '../../types/note';
 import css from './NoteForm.module.css';
 
+
 interface NoteFormProps {
-  onCancel: () => void;
+  onClose: () => void;
 }
 
 const validationSchema = Yup.object().shape({
   title: Yup.string().required('Title is required'),
-  content: Yup.string().required('Content is required'),
+  content: Yup.string(),
   tag: Yup.mixed<NoteTag>()
-    .oneOf(['Work', 'Personal', 'Study'])
+    .oneOf(['Todo', 'Work', 'Personal', 'Meeting', 'Shopping'])
     .required('Tag is required'),
 });
 
 const initialValues = {
   title: '',
   content: '',
-  tag: 'personal' as NoteTag,
+  tag: 'Personal' as NoteTag,
 };
 
-export default function NoteForm({ onCancel }: NoteFormProps) {
+export default function NoteForm({ onClose }: NoteFormProps) {
   const queryClient = useQueryClient();
 
   const createNoteMutation = useMutation({
@@ -33,7 +33,7 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
     onSuccess: () => {
       toast.success('Note created successfully!');
       queryClient.invalidateQueries({ queryKey: ['notes'] });
-      onCancel(); 
+      onClose(); 
     },
     onError: (error) => {
       toast.error(`Error creating note: ${error.message}`);
@@ -65,9 +65,11 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
           <label className={css.label}>
             Tag
             <Field className={css.select} as="select" name="tag">
-              <option value="personal">Personal</option>
-              <option value="work">Work</option>
-              <option value="study">Study</option>
+              <option value="Personal">Personal</option>
+              <option value="Work">Work</option>
+              <option value="Todo">Todo</option>
+              <option value="Meeting">Meeting</option>
+              <option value="Shopping">Shopping</option>
             </Field>
             <ErrorMessage className={css.error} name="tag" component="div" />
           </label>
@@ -79,7 +81,7 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
             >
               {isSubmitting ? 'Creating...' : 'Create Note'}
             </button>
-            <button className={css.cancelButton} type="button" onClick={onCancel}>
+            <button className={css.cancelButton} type="button" onClick={onClose}>
               Cancel
             </button>
           </div>

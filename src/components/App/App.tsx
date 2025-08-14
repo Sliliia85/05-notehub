@@ -68,7 +68,7 @@ export default function App() {
       
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <NoteForm onCancel={() => setShowModal(false)} />
+          <NoteForm onClose={() => setShowModal(false)} />
         </Modal>
       )}
     </div>
